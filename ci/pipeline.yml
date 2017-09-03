@@ -1,0 +1,30 @@
+resources:
+- name: appsmovie
+  type: git
+  source:
+    uri: https://github.com/jnjarun/apps-movie-fun-code  #<---- REPLACE ME
+    branch: master
+
+- name: deploy-appsmovie
+  type: cf
+  source:
+    api: https://api.system.cumuluslabs.io        #<---- REPLACE
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: jarun-pal    #<---- REPLACE ME
+    space: sandbox        #<---- REPLACE ME
+    skip_cert_check: true
+
+jobs:
+- name: build
+  public: true
+  plan:
+  - get: appsmovie
+  - task: package
+    file: appsmovie/ci/tasks/package.yml
+  - put: deploy-appsmovie
+    params:
+      manifest: appsmovie/manifest.yml
+      path: package-output/appsmovie.jar
+ 
+ 
