@@ -3,7 +3,7 @@
 set -e +x
 
 pushd appsmovie
-  echo "Packaging JAR"
+  echo "Packaging JAR_1"
   ./mvnw clean package -DskipTests
 popd
 
